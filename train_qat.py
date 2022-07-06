@@ -65,9 +65,9 @@ def main():
     # create solver
     logging.info(f'Preparing for experiment: [{config.trial_name}]')
     if args.resume:
-        solver = trail.Solver(train_data, val_data, args.resume_path)
+        solver = trail.QuantSolver(train_data, val_data, args.resume_path)
     else:
-        solver = trail.Solver(train_data, val_data)
+        solver = trail.QuantSolver(train_data, val_data, qat_path=args.qat_path)
 
     # train
     logging.info('Start training...')
