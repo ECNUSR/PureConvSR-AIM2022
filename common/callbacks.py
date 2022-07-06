@@ -58,4 +58,4 @@ class ValidationCallback(Callback):
 
         # record tensorboard
         logging.tb_log(epoch, loss=loss, psnr=psnr)
-        logging.report(f'epoch: {epoch}, loss: {loss:.4f}, psnr: {psnr:.4f}')
+        logging.report(f'Validation [epoch: {epoch}]\n\t# loss: {loss:.4f}\n\t# psnr: {psnr:.4f} Best: {self.best_psnr:.4f} @ {self.best_epoch} epoch')
