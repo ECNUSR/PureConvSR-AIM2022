@@ -6,7 +6,6 @@ import shutil
 import importlib
 import tensorflow as tf
 from common import logging
-from common.lark import try_send
 from common.data import DIV2K
 
 
@@ -26,11 +25,14 @@ def main():
     parser.add_argument('--lark', nargs='+', type=str, default=None, help='lark receivers')
     parser.add_argument('--resume', action='store_true', default=False)
     parser.add_argument('--resume_path', default=None)
+    parser.add_argument('--debug', action='store_true', default=False)
     args = parser.parse_args()
 
     # set trail name for save
     config = importlib.import_module(f'trials.{args.trial}.config')
     config.trial_name = f'{args.trial}_qat'
+    if args.debug:
+        config.trial_name = 'debug_' + config.trial_name
 
     # make dirs and init logger
     if not args.resume and osp.exists(osp.join('experiments', config.trial_name)):
@@ -70,7 +72,7 @@ def main():
     # train
     logging.info('Start training...')
     solver.train()
-    try_send('训练完成', 'cjh')
+    logging.report('训练完成')
 
 
 if __name__ == '__main__':
