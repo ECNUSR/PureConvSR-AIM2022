@@ -20,7 +20,7 @@ def save_gpu_memory():
 
 def representative_dataset_gen():
     ''' representative_dataset_gen '''
-    for i in tqdm.tqdm(range(801, 901)):
+    for i in tqdm.tqdm(range(801, 901), desc='rep_dataset'):
         lr_path = f'datasets/DIV2K/DIV2K_valid_LR_bicubic/X3/{i:04d}.pt'
         with open(lr_path, 'rb') as f:
             lr = pickle.load(f)
@@ -42,9 +42,11 @@ def representative_dataset_gen_time():
 
 def convert_model(model_path, tflite_path):
     ''' convert_model '''
-    model = tf.saved_model.load(model_path, custom_objects={'tf': tf})
-    converter = tf.lite.TFLiteConverter.from_keras_model(model)
-    converter.experimental_new_converter = False
+    model = tf.saved_model.load(model_path)
+    concrete_func = model.signatures[tf.saved_model.DEFAULT_SERVING_SIGNATURE_DEF_KEY]
+    concrete_func.inputs[0].set_shape([1, None, None, 3])
+    converter = tf.lite.TFLiteConverter.from_concrete_functions([concrete_func])
+    converter.experimental_new_converter=True
     tflite_model = converter.convert()
     with open(f"{tflite_path}.tflite", "wb") as f:
         f.write(tflite_model)
@@ -86,7 +88,8 @@ def evaluate(tflite_path, save_path):
     print(f'Output Scale: {output_size}, Zero Point: {output_zero_point}')
 
     psnr = 0.0
-    for i in range(801, 901):
+    bar = tqdm.tqdm(range(801, 901), desc='calc_psnr')
+    for i in bar:
         with open(f'datasets/DIV2K/DIV2K_valid_LR_bicubic/X3/0{i}.pt', 'rb') as f:
             lr = pickle.load(f)
         lr = np.expand_dims(lr, 0).astype(np.float32)
@@ -110,7 +113,7 @@ def evaluate(tflite_path, save_path):
         hr = np.expand_dims(hr, 0).astype(np.float32)
         mse = np.mean((sr.astype(np.float32) - hr.astype(np.float32)) ** 2)
         singlepsnr =  20. * math.log10(255. / math.sqrt(mse))
-        print(f'[{i}]/[100]: {singlepsnr}')
+        bar.set_description(f'psnr: {singlepsnr}')
         psnr += singlepsnr
     print(psnr / 100)
 
@@ -121,20 +124,20 @@ def main():
     save_gpu_memory()
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--trial', required=True, type=str, help='trial id')
+    parser.add_argument('--name', required=True, type=str, help='trial name')
     args = parser.parse_args()
 
     # convert model
     os.makedirs(f'TFLite/{args.name}/', exist_ok=True)
     ## model.tflite (INT8, 360)
-    convert_model_quantize(f'experiment/{args.name}_qat/best_status', f'TFLite/{args.name}/model.tflite', time=True)
+    convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model.tflite', time=True)
     ## model_none.tflite (INT8, None)
-    convert_model_quantize(f'experiment/{args.name}_qat/best_status', f'TFLite/{args.name}/model_none.tflite', time=False)
+    convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model_none.tflite', time=False)
     ## model_none_float.tflite (float32, None)
-    convert_model(f'experiment/{args.name}/best_status', f'TFLite/{args.name}/model_none_float.tflite')
+    convert_model(f'experiments/{args.name}/best_status', f'TFLite/{args.name}/model_none_float.tflite')
 
     # evaluate with model_none.tflite
-    evaluate(f'TFLite/{args.name}/model_none.tflite', f'experiment/{args.name}_qat/visiual')
+    evaluate(f'TFLite/{args.name}/model_none.tflite', f'experiments/{args.name}_qat/visiual')
 
 
 if __name__ == '__main__':
