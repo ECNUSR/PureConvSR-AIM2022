@@ -70,9 +70,9 @@ class BaseSolver:
 
 class BaseQuantSolver(BaseSolver):
     ''' BaseQuantSolver '''
-    def __init__(self, config, arch, train_data, val_data, resume_path=None, qat_path=None):
+    def __init__(self, config, train_data, val_data, resume_path=None, qat_path=None):
         self.qat_path = qat_path
-        super().__init__(config, arch, train_data, val_data, resume_path)
+        super().__init__(config, None, train_data, val_data, resume_path)
 
     def build_model(self):
         if self.resume_path is not None:

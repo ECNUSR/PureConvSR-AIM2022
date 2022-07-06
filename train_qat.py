@@ -21,15 +21,15 @@ def main():
     ''' main '''
     parser = argparse.ArgumentParser()
     parser.add_argument('--trial', required=True, type=str, help='trial name like id')
-    parser.add_argument('--qat_path', required=True, type=str, help='qat path')
-    parser.add_argument('--lark', nargs='+', type=str, default=None, help='lark receivers')
     parser.add_argument('--resume', action='store_true', default=False)
     parser.add_argument('--resume_path', default=None)
+    parser.add_argument('--qat_path', default=None, type=str, help='qat path')
+    parser.add_argument('--lark', nargs='+', type=str, default=None, help='lark receivers')
     parser.add_argument('--debug', action='store_true', default=False)
     args = parser.parse_args()
 
     # set trail name for save
-    config = importlib.import_module(f'trials.{args.trial}.config')
+    config = importlib.import_module(f'trials.{args.trial}.qat_config')
     config.trial_name = f'{args.trial}_qat'
     if args.debug:
         config.trial_name = 'debug_' + config.trial_name

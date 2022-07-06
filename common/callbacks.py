@@ -54,8 +54,8 @@ class ValidationCallback(Callback):
                     'best_psnr': self.best_psnr
                 }, f)
 
-        logging.info(f'Epoch: {epoch} | PSNR: {psnr:.4f} | Loss: {loss:.4f} | lr: {K.get_value(self.model.optimizer.lr):.2e} | Best_PSNR: {self.best_psnr:.4f} in Epoch [{self.best_epoch}]')
+        logging.info(f'Epoch: {epoch + 1} | PSNR: {psnr:.4f} | Loss: {loss:.4f} | lr: {K.get_value(self.model.optimizer.lr):.2e} | Best_PSNR: {self.best_psnr:.4f} in Epoch [{self.best_epoch + 1}]')
 
         # record tensorboard
         logging.tb_log(epoch, loss=loss, psnr=psnr)
-        logging.report(f'Validation [epoch: {epoch}]\n\t# loss: {loss:.4f}\n\t# psnr: {psnr:.4f} Best: {self.best_psnr:.4f} @ {self.best_epoch} epoch')
+        logging.report(f'Validation [epoch: {epoch + 1}]\n\t# loss: {loss:.4f}\n\t# psnr: {psnr:.4f} Best: {self.best_psnr:.4f} @ {self.best_epoch + 1} epoch')
