@@ -88,8 +88,8 @@ def evaluate(tflite_path, save_path):
     print(f'Output Scale: {output_size}, Zero Point: {output_zero_point}')
 
     psnr = 0.0
-    bar = tqdm.tqdm(range(801, 901), desc='calc_psnr')
-    for i in bar:
+    psnr_bar = tqdm.tqdm(range(801, 901), desc='calc_psnr')
+    for i in psnr_bar:
         with open(f'datasets/DIV2K/DIV2K_valid_LR_bicubic/X3/0{i}.pt', 'rb') as f:
             lr = pickle.load(f)
         lr = np.expand_dims(lr, 0).astype(np.float32)
@@ -113,7 +113,7 @@ def evaluate(tflite_path, save_path):
         hr = np.expand_dims(hr, 0).astype(np.float32)
         mse = np.mean((sr.astype(np.float32) - hr.astype(np.float32)) ** 2)
         singlepsnr =  20. * math.log10(255. / math.sqrt(mse))
-        bar.set_description(f'psnr: {singlepsnr}')
+        psnr_bar.set_description(f'psnr: {singlepsnr}')
         psnr += singlepsnr
     print(psnr / 100)
 

@@ -12,5 +12,6 @@ class Solver(BaseSolver):
 
 
 class QuantSolver(BaseQuantSolver):
+    ''' QuantSolver '''
     def __init__(self, train_data, val_data, resume_path=None, qat_path=None):
         super().__init__(qat_config, train_data, val_data, resume_path, qat_path)

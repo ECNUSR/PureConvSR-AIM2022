@@ -3,6 +3,7 @@
 from os import path as osp
 import pickle
 import tqdm
+import numpy as np
 from tensorflow.keras.callbacks import Callback
 import tensorflow.keras.backend as K
 from common import logging
@@ -59,3 +60,23 @@ class ValidationCallback(Callback):
         # record tensorboard
         logging.tb_log(epoch, loss=loss, psnr=psnr)
         logging.report(f'Validation [epoch: {epoch + 1}]\n\t# loss: {loss:.4f}\n\t# psnr: {psnr:.4f} Best: {self.best_psnr:.4f} @ {self.best_epoch + 1} epoch')
+
+
+class SimulationResidual(Callback):
+    ''' SimulationResidual '''
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+
+    def on_batch_end(self, batch, logs=None):
+        ''' on_batch_end '''
+        for layer in self.model.layers:
+            if 'simulation_residual' in layer.name:
+                weight = layer.weights[0].numpy()
+                channel = weight.shape[2] - 3
+                weight2 = np.zeros((3, 3, channel + 3, 27))
+                weight2[:, :, :channel, :] = weight[:, :, :channel, :]
+                weight2[:, :, channel:, :] = 0
+                for j in range(27):
+                    weight2[1, 1, channel + j % 3, j] = 1
+                layer.weights[0].assign(weight2)
