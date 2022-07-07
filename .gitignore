@@ -2,7 +2,6 @@
 datasets/*
 experiments/*
 results/*
-tb_logger/*
 tmp/*
 .vscode/*
 
