@@ -9,10 +9,12 @@
 ```bash
 pylint -j 16 --rcfile=.pylintrc common/ trials/ *.py | head -n 500
 ```
-
-## 1. baseline
+## 实验
+详细情况请见[实验表格](https://yzf-ecnu-sr.feishu.cn/sheets/shtcnv1M7ioCK0teeEOwto4Wxkc)
+### 1. baseline
 
 ```bash
 python train.py --trial baseline --lark cjh
 python train_qat.py --trial baseline --qat_path experiments/baseline/best_status --lark cjh
 ```
+> PSNR: 30.0991 | QAT_PSNR: 30.0574
