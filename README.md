@@ -23,10 +23,12 @@ python convert.py --name baseline
 ### 2. baseline_typo_trans
 > 将“重复”、“Add”这两个算子用Cat替代；
 ```bash
-python train.py --trial baseline_typo_trans --lark cjh
+cp experiments/baseline experiments/baseline_typo_trans -r
+cp tb_logger/baseline tb_logger/baseline_typo_trans -r
 python train_qat.py --trial baseline_typo_trans --qat_path experiments/baseline_typo_trans/best_status --lark cjh
 python convert.py --name baseline_typo_trans
 ```
+> PSNR: 30.0991 | QAT_PSNR: 29.8804
 
 ### 3. trial1
 
