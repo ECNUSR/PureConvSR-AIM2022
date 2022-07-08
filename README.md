@@ -20,9 +20,17 @@ python convert.py --name baseline
 ```
 > PSNR: 30.0991 | QAT_PSNR: 30.0574
 
-### 2. trial1
+### 2. baseline_typo_trans
+> 将“重复”、“Add”这两个算子用Cat替代；
+```bash
+python train.py --trial baseline_typo_trans --lark cjh
+python train_qat.py --trial baseline_typo_trans --qat_path experiments/baseline_typo_trans/best_status --lark cjh
+python convert.py --name baseline_typo_trans
+```
 
-> 将“重复”、“Add”这两个算子用Cat替代；然后将四个3x3卷积，换成1x1卷积和3x3卷积交替；其余和baseline保持一致
+### 3. trial1
+
+> 在【baseline_typo_trans】基础上，将四个3x3卷积，换成1x1卷积和3x3卷积交替；通道数改为32；其余保持一致
 
 ```bash
 python train.py --trial trial1 --lark cjh
@@ -30,3 +38,14 @@ python train_qat.py --trial trial1 --qat_path experiments/trial1/best_status --l
 python convert.py --name trial1
 ```
 > PSNR: 30.0872 | QAT_PSNR: 30.0259
+
+### 3. trial2
+
+> 在【trial2】基础上，将batch size改为32，增加量化训练的轮数；其余保持一致
+
+```bash
+python train.py --trial trial2 --lark cjh
+python train_qat.py --trial trial2 --qat_path experiments/trial2/best_status --lark cjh
+python convert.py --name trial2
+```
+> PSNR: 30.0937 | QAT_PSNR: 30.0173
