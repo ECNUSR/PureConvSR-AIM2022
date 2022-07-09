@@ -62,3 +62,15 @@ python train_qat.py --trial trial3 --qat_path experiments/trial3/best_status --l
 python convert.py --name trial3
 ```
 > PSNR: 30.0714 | QAT_PSNR: 29.9898
+
+### 4. trial4
+
+> 在trial1的基础上，赋值不是准确的0和1，而是偏移一丢丢。且qat训练的时候减小lr
+
+```bash
+cp experiments/trial1 experiments/trial4 -r
+cp tb_logger/trial1 tb_logger/trial4 -r
+python train_qat.py --trial trial4 --qat_path experiments/trial4/best_status --lark cjh
+python convert.py --name trial4
+```
+> PSNR: 30.0872 | QAT_PSNR: 30.0173
