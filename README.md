@@ -51,3 +51,14 @@ python train_qat.py --trial trial2 --qat_path experiments/trial2/best_status --l
 python convert.py --name trial2
 ```
 > PSNR: 30.0937 | QAT_PSNR: 30.0173
+
+### 3. trial3
+
+> 在trial1的基础上，有两个算子我写成一层了，恢复回去，原则上两个等价
+
+```bash
+python train.py --trial trial3 --lark cjh
+python train_qat.py --trial trial3 --qat_path experiments/trial3/best_status --lark cjh
+python convert.py --name trial3
+```
+> PSNR: 30.0714 | QAT_PSNR: 29.9898
