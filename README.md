@@ -74,3 +74,15 @@ python train_qat.py --trial trial4 --qat_path experiments/trial4/best_status --l
 python convert.py --name trial4
 ```
 > PSNR: 30.0872 | QAT_PSNR: 30.0173
+
+### 5. trial5
+
+> 在trial1的基础上，添加EMA策略
+
+```bash
+cp experiments/trial1 experiments/trial5 -r
+cp tb_logger/trial1 tb_logger/trial5 -r
+python train_qat.py --trial trial5 --qat_path experiments/trial5/best_status --lark cjh
+python convert.py --name trial5
+```
+> PSNR: 30.0872 | QAT_PSNR: 30.0340

@@ -16,10 +16,6 @@ from .arch import rep_arch
 
 class SimulationResidual(Callback):
     ''' SimulationResidual '''
-    def __init__(self, model):
-        super().__init__()
-        self.model = model
-
     def on_batch_end(self, batch, logs=None):
         ''' on_batch_end '''
         for layer in self.model.layers:
@@ -105,6 +101,6 @@ class QuantSolver(BaseQuantSolver):
         self.callback = [
             LearningRateScheduler(self.scheduler),
             TrainDataShuffleCallback(self.train_data),
-            SimulationResidual(self.model),
+            SimulationResidual(),
             ValidationCallback(self.config.trial_name, self.val_data, self.state)
         ]

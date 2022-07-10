@@ -7,7 +7,7 @@ model = dict(
     scale = 3,
     in_channels = 3,
     out_channels = 3,
-    channel = 32,
+    channel = 28,
     blocks = 4,
 )
 

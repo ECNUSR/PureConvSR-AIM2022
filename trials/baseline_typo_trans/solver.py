@@ -84,6 +84,6 @@ class QuantSolver(BaseQuantSolver):
         self.callback = [
             LearningRateScheduler(self.scheduler),
             TrainDataShuffleCallback(self.train_data),
-            SimulationResidual(self.model),
+            SimulationResidual(),
             ValidationCallback(self.config.trial_name, self.val_data, self.state)
         ]

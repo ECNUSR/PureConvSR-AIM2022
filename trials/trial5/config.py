@@ -19,8 +19,8 @@ data = dict(
 
 train = dict(
     lr = 1e-3,
-    lr_steps = [50, 100, 150, 200],
+    lr_steps = [120, 240, 360, 480],
     lr_gamma = 0.5,
-    epochs = 220,
+    epochs = 600,
     loss = 'mae',
 )
