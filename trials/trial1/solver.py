@@ -84,6 +84,7 @@ class QuantSolver(BaseQuantSolver):
             with tfmot.quantization.keras.quantize_scope({'NoOpQuantizeConfig': NoOpQuantizeConfig, 'depth_to_space': depth_to_space, 'tf': tf}):
                 self.model = tfmot.quantization.keras.quantize_apply(annotate_model)
         logging.info(f'Create model successfully! Params: [{self.model.count_params() / 1e3:.2f}]K')
+        self.model.summary(print_fn=logging.info)
 
     def build_callback(self):
         ''' build_callback '''
