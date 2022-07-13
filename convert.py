@@ -14,8 +14,8 @@ def save_gpu_memory():
     ''' save_gpu_memory '''
     tf.config.set_soft_device_placement(True)
     physical_devices = tf.config.list_physical_devices('GPU')
-    if len(physical_devices) > 0:
-        tf.config.experimental.set_memory_growth(physical_devices[0], True)
+    for i in range(len(physical_devices)):
+        tf.config.experimental.set_memory_growth(physical_devices[i], True)
 
 
 def representative_dataset_gen():
