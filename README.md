@@ -87,7 +87,7 @@ python convert.py --name trial5
 ```
 > PSNR: 30.0872 | QAT_PSNR: 30.0340
 
-### 5. trial6
+### 6. trial6
 
 > 在trial5的基础上，增加一个1x1卷积
 
@@ -97,3 +97,14 @@ python train_qat.py --trial trial6 --qat_path experiments/trial6/best_status --l
 python convert.py --name trial6
 ```
 > PSNR: 30.0956 | QAT_PSNR: 30.0397
+
+### 7. trial7
+
+> 在trial5的基础上，1x3改回3x3卷积，通道数目改回28
+
+```bash
+python train.py --trial trial7 --lark cjh
+python train_qat.py --trial trial7 --qat_path experiments/trial7/best_status --lark cjh
+python convert.py --name trial7
+```
+> PSNR: 30.1632 | QAT_PSNR: 30.1139

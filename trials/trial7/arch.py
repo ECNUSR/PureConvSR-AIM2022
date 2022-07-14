@@ -12,12 +12,10 @@ def arch(scale, in_channels, out_channels, channel, blocks):
     inp = Input(shape=(None, None, in_channels))
 
     x = Conv2D(channel, 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(inp)
-    x = Conv2D(channel, 1, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
     upsampled_inp = Lambda(lambda x_list: tf.concat(x_list, axis=3))([inp]*(scale**2))  # pylint: disable=unexpected-keyword-arg, no-value-for-parameter
 
     for _ in range(blocks):
         x = Conv2D(channel, 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
-        x = Conv2D(channel, 1, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
 
     # Pixel-Shuffle
     x = Conv2D(out_channels*(scale**2), 3, padding='same', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
@@ -33,11 +31,9 @@ def rep_arch(scale, in_channels, out_channels, channel, blocks):
     inp = Input(shape=(None, None, in_channels))
 
     x = Conv2D(channel, 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(inp)
-    x = Conv2D(channel, 1, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
 
     for _ in range(blocks):
         x = Conv2D(channel, 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
-        x = Conv2D(channel, 1, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
 
     # Pixel-Shuffle
     x = Concatenate()([x, inp])
