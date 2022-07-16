@@ -81,7 +81,7 @@ class SimulationResidual(Callback):
 
 
 class ValidationWithEMACallback(Callback):
-    """ EMACallback """
+    """ ValidationWithEMACallback """
     def __init__(self, trial_name, val_data, state, interval=1, decay=0.999):
         super().__init__()
         self.trial_name = trial_name

@@ -108,3 +108,14 @@ python train_qat.py --trial trial7 --qat_path experiments/trial7/best_status --l
 python convert.py --name trial7
 ```
 > PSNR: 30.1632 | QAT_PSNR: 30.1139
+
+### 8. trial8
+
+> 在trial5的基础上，中间的两组3x3+1x1改回2x2+2x2卷积
+
+```bash
+python train.py --trial trial8 --lark cjh
+python train_qat.py --trial trial8 --qat_path experiments/trial8/best_status --lark cjh
+python convert.py --name trial8
+```
+> PSNR: 30.0999 | QAT_PSNR: 30.0232
