@@ -72,11 +72,12 @@ class SimulationResidual(Callback):
             if 'simulation_residual' in layer.name:
                 weight = layer.weights[0].numpy()
                 channel = weight.shape[2] - 3
-                weight2 = np.zeros((3, 3, channel + 3, 27))
+                kernel_size = weight.shape[0]
+                weight2 = np.zeros((kernel_size, kernel_size, channel + 3, 27))
                 weight2[:, :, :channel, :] = weight[:, :, :channel, :]
                 weight2[:, :, channel:, :] = 0
                 for j in range(27):
-                    weight2[1, 1, channel + j % 3, j] = 1
+                    weight2[kernel_size//2, kernel_size//2, channel + j % 3, j] = 1
                 layer.weights[0].assign(weight2)
 
 
@@ -137,8 +138,8 @@ class ValidationWithEMACallback(Callback):
             K.set_value(weight, self.mv_trainable_weights_vals[weight.name])
 
     def _make_mv_model(self):
-        self.model.save('/tmp/mobial_sr', overwrite=True, save_format='tf')
-        model2 = load_model('/tmp/mobial_sr', custom_objects={'tf': tf})
+        self.model.save(f'/tmp/mobial_sr_{self.trial_name}', overwrite=True, save_format='tf')
+        model2 = load_model(f'/tmp/mobial_sr_{self.trial_name}', custom_objects={'tf': tf})
         for sym_weight in model2.trainable_weights:
             K.set_value(sym_weight, self.mv_trainable_weights_vals[sym_weight.name])
         return model2
