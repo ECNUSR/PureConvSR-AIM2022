@@ -162,4 +162,4 @@ python train.py --trial trial12 --lark cjh
 python train_qat.py --trial trial12 --qat_path experiments/trial12/best_status --lark cjh
 python convert.py --name trial12
 ```
-> PSNR: 30.1213 | QAT_PSNR: 
+> PSNR: 30.1213 | QAT_PSNR: 30.0592
