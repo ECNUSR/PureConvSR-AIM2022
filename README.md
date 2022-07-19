@@ -130,3 +130,14 @@ python train_qat.py --trial trial9 --qat_path experiments/trial9/best_status --l
 python convert.py --name trial9
 ```
 > PSNR: 30.0941 | QAT_PSNR: 30.0397
+
+### 10. trial10
+
+> 在trial5的基础上，1x1卷积变3x3卷积，通道数上升至48
+
+```bash
+python train.py --trial trial10 --lark cjh
+python train_qat.py --trial trial10 --qat_path experiments/trial10/best_status --lark cjh
+python convert.py --name trial10
+```
+> PSNR: 30.3244 | QAT_PSNR: 30.2501
