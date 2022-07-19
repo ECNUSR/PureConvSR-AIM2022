@@ -152,3 +152,14 @@ python train_qat.py --trial trial11 --qat_path experiments/trial11/best_status -
 python convert.py --name trial11
 ```
 > PSNR: 28.1597 | QAT_PSNR: 28.0257
+
+### 12. trial12
+
+> 在trial5的基础上，把10替换成trial11的权重
+
+```bash
+python train.py --trial trial12 --lark cjh
+python train_qat.py --trial trial12 --qat_path experiments/trial12/best_status --lark cjh
+python convert.py --name trial12
+```
+> PSNR: 30.1213 | QAT_PSNR: 
