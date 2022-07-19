@@ -141,3 +141,14 @@ python train_qat.py --trial trial10 --qat_path experiments/trial10/best_status -
 python convert.py --name trial10
 ```
 > PSNR: 30.3244 | QAT_PSNR: 30.2501
+
+### 11. trial11
+
+> 只有一个卷积和一个pixelshuffle
+
+```bash
+python train.py --trial trial11 --lark cjh
+python train_qat.py --trial trial11 --qat_path experiments/trial11/best_status --lark cjh
+python convert.py --name trial11
+```
+> PSNR: 28.1597 | QAT_PSNR: 28.0257
