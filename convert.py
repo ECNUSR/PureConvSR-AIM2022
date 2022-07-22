@@ -93,7 +93,7 @@ def evaluate(tflite_path, save_path):
         with open(f'datasets/DIV2K/DIV2K_valid_LR_bicubic/X3/0{i}.pt', 'rb') as f:
             lr = pickle.load(f)
         lr = np.expand_dims(lr, 0).astype(np.float32)
-        #lr = np.round(lr / input_size + input_zero_point).astype(np.uint8)
+        lr = np.round(lr / input_size + input_zero_point).astype(np.uint8)
         lr = lr.astype(np.uint8)
         interpreter.resize_tensor_input(input_details[0]['index'], lr.shape)
         interpreter.allocate_tensors()
@@ -101,7 +101,7 @@ def evaluate(tflite_path, save_path):
         interpreter.invoke()
 
         sr = interpreter.get_tensor(output_details[0]['index'])
-        #sr = np.clip(np.round((sr.astype(np.float32) - output_zero_point) * output_size), 0, 255)
+        sr = np.clip(np.round((sr.astype(np.float32) - output_zero_point) * output_size), 0, 255)
         sr = np.clip(sr, 0, 255)
 
         # save image
@@ -113,8 +113,8 @@ def evaluate(tflite_path, save_path):
         hr = np.expand_dims(hr, 0).astype(np.float32)
         mse = np.mean((sr.astype(np.float32) - hr.astype(np.float32)) ** 2)
         singlepsnr =  20. * math.log10(255. / math.sqrt(mse))
-        psnr_bar.set_description(f'psnr: {singlepsnr}')
         psnr += singlepsnr
+        psnr_bar.set_description(f'psnr: {psnr / (i - 800)}')
     print(psnr / 100)
 
 

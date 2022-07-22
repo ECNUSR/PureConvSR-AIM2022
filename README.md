@@ -163,3 +163,13 @@ python train_qat.py --trial trial12 --qat_path experiments/trial12/best_status -
 python convert.py --name trial12
 ```
 > PSNR: 30.1213 | QAT_PSNR: 30.0592
+
+### 13. trial13
+
+> 在trial9的基础上，优化掉cat算子
+
+```bash
+python train_qat.py --trial trial14 --lark cjh --qat_path experiments/trial9/best_status
+python convert.py --name trial14
+```
+> PSNR: 30.0941 | QAT_PSNR: 30.0061
