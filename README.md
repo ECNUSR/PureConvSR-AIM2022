@@ -170,6 +170,7 @@ python convert.py --name trial12
 
 ```bash
 python train_qat.py --trial trial14 --lark cjh --qat_path experiments/trial9/best_status
-python convert.py --name trial14
+python remove_clip_fintune.py --trial trial13 --qat_path experiments/trial13_qat/best_status --lark cjh
+python convert.py --name trial13 --clip
 ```
-> PSNR: 30.0941 | QAT_PSNR: 30.0061
+> PSNR: 30.0941 | QAT_PSNR: 30.0091

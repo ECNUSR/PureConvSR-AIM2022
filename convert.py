@@ -125,14 +125,21 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', required=True, type=str, help='trial name')
+    parser.add_argument('--clip', action='store_true', default=False)
     args = parser.parse_args()
 
     # convert model
     os.makedirs(f'TFLite/{args.name}/', exist_ok=True)
-    ## model.tflite (INT8, 360)
-    convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model.tflite', time=True)
-    ## model_none.tflite (INT8, None)
-    convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model_none.tflite', time=False)
+    if args.clip:
+        ## model.tflite (INT8, 360)
+        convert_model_quantize(f'experiments/{args.name}_clip/best_status', f'TFLite/{args.name}/model.tflite', time=True)
+        ## model_none.tflite (INT8, None)
+        convert_model_quantize(f'experiments/{args.name}_clip/best_status', f'TFLite/{args.name}/model_none.tflite', time=False)
+    else:
+        ## model.tflite (INT8, 360)
+        convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model.tflite', time=True)
+        ## model_none.tflite (INT8, None)
+        convert_model_quantize(f'experiments/{args.name}_qat/best_status', f'TFLite/{args.name}/model_none.tflite', time=False)
     ## model_none_float.tflite (float32, None)
     convert_model(f'experiments/{args.name}/best_status', f'TFLite/{args.name}/model_none_float.tflite')
 

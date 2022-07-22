@@ -107,11 +107,13 @@ class ValidationWithEMACallback(Callback):
 
         # validate
         psnr = 0.0
+        maxv = 0.0
         model = self._make_mv_model()
         for lr, hr in tqdm.tqdm(self.val_data):
             sr = model(lr)
             sr_numpy = K.eval(sr)
             psnr += calc_psnr((sr_numpy).squeeze(), (hr).squeeze())
+            maxv = sr_numpy.max()
         psnr = psnr / len(self.val_data)
         loss = logs['loss']
 
@@ -127,7 +129,7 @@ class ValidationWithEMACallback(Callback):
                     'best_psnr': self.best_psnr
                 }, f)
 
-        logging.info(f'Epoch: {epoch + 1} | PSNR: {psnr:.4f} | Loss: {loss:.4f} | lr: {K.get_value(model.optimizer.lr):.2e} | Best_PSNR: {self.best_psnr:.4f} in Epoch [{self.best_epoch + 1}]')
+        logging.info(f'Epoch: {epoch + 1} | PSNR: {psnr:.4f} | Loss: {loss:.4f} | lr: {K.get_value(model.optimizer.lr):.2e} | Best_PSNR: {self.best_psnr:.4f} | max_value: {maxv} in Epoch [{self.best_epoch + 1}]')
 
         # record tensorboard
         logging.tb_log(epoch, loss=loss, psnr=psnr)
