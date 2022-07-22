@@ -16,7 +16,13 @@ class DIV2K(tf.keras.utils.Sequence):
         self.batch_size = batch_size
         self.iters_per_batch = iters_per_batch
 
-        if self.mode == 'train':
+        if self.mode == 'df2k':
+            self.img_list = [f'{i:04d}.pt' for i in range(1, 801)] + [f'{i:06d}.pt' for i in range(1, 2651)]
+            self.dataroot_hr = './datasets/DF2K/DF2K_train_HR/'
+            self.dataroot_lr = './datasets/DF2K/DF2K_train_LR_bicubic/'
+            self.flip = flip
+            self.rot = rot
+        elif self.mode == 'train':
             self.img_list = [f'{i:04d}.pt' for i in range(1, 801)]
             self.dataroot_hr = './datasets/DIV2K/DIV2K_train_HR/'
             self.dataroot_lr = f'./datasets/DIV2K/DIV2K_train_LR_bicubic/X{scale}/'
