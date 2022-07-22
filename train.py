@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--trial', required=True, type=str, help='trial name like id')
     parser.add_argument('--lark', nargs='+', type=str, default=None, help='lark receivers')
     parser.add_argument('--resume', action='store_true', default=False)
+    parser.add_argument('--df2k', action='store_true', default=False)
     parser.add_argument('--resume_path', default=None)
     parser.add_argument('--debug', action='store_true', default=False)
     args = parser.parse_args()
@@ -53,7 +54,10 @@ def main():
     trail = importlib.import_module(f'trials.{args.trial}.solver')
 
     # create dataset
-    train_data = DIV2K(mode='train', scale=3, **config.data)
+    if args.df2k:
+        train_data = DIV2K(mode='df2k', scale=3, **config.data)
+    else:
+        train_data = DIV2K(mode='train', scale=3, **config.data)
     logging.info('Create train dataset successfully!')
     logging.info(f'Training: [{len(train_data)}] iterations for each epoch')
 

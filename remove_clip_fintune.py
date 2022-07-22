@@ -22,23 +22,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--trial', required=True, type=str, help='trial name like id')
     parser.add_argument('--df2k', action='store_true', default=False)
-    parser.add_argument('--resume', action='store_true', default=False)
-    parser.add_argument('--resume_path', default=None)
     parser.add_argument('--qat_path', default=None, type=str, help='qat path')
     parser.add_argument('--lark', nargs='+', type=str, default=None, help='lark receivers')
-    parser.add_argument('--debug', action='store_true', default=False)
     args = parser.parse_args()
 
     # set trail name for save
-    config = importlib.import_module(f'trials.{args.trial}.qat_config')
-    config.trial_name = f'{args.trial}_qat'
-    if args.debug:
-        config.trial_name = 'debug_' + config.trial_name
+    config = importlib.import_module(f'trials.{args.trial}.clip_config')
+    config.trial_name = f'{args.trial}_clip'
 
     # make dirs and init logger
-    if not args.resume and osp.exists(osp.join('experiments', config.trial_name)):
+    if osp.exists(osp.join('experiments', config.trial_name)):
         shutil.rmtree(osp.join('experiments', config.trial_name))
-    if not args.resume and osp.exists(osp.join('tb_logger', config.trial_name)):
+    if osp.exists(osp.join('tb_logger', config.trial_name)):
         shutil.rmtree(osp.join('tb_logger', config.trial_name))
     os.makedirs(osp.join('experiments', config.trial_name, 'best_status'), exist_ok=True)
     os.makedirs(osp.join('experiments', config.trial_name, 'visiual'), exist_ok=True)
@@ -68,10 +63,7 @@ def main():
 
     # create solver
     logging.info(f'Preparing for experiment: [{config.trial_name}]')
-    if args.resume:
-        solver = trail.QuantSolver(train_data, val_data, args.resume_path)
-    else:
-        solver = trail.QuantSolver(train_data, val_data, qat_path=args.qat_path)
+    solver = trail.RemoveClipQuantSolver(train_data, val_data, qat_path=args.qat_path)
 
     # train
     logging.info('Start training...')
