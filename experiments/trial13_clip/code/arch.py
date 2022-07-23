@@ -36,7 +36,7 @@ def rep_arch(scale, in_channels, out_channels, channel, blocks):
         x = Conv2D(channel + 3, 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
 
     # Pixel-Shuffle
-    x = Conv2D(out_channels*(scale**2), 3, padding='same', activation='relu', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
+    x = Conv2D(out_channels*(scale**2), 3, padding='same', kernel_initializer=glorot_normal(), bias_initializer='zeros')(x)
 
     out = Lambda(lambda x: K.clip(tf.nn.depth_to_space(x, scale), 0., 255.))(x)
 
@@ -55,7 +55,6 @@ def clip_arch(scale, in_channels, out_channels, channel, blocks):
     # Pixel-Shuffle
     x = Conv2D(out_channels*(scale**2), 3, padding='same', activation='relu',)(x)
     # for clip
-    x = Conv2D(out_channels*(scale**2), 1, activation='relu',)(x)
     x = Conv2D(out_channels*(scale**2), 1, activation='relu',)(x)
 
     out = Lambda(lambda x: tf.nn.depth_to_space(x, scale))(x)

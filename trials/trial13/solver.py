@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras.layers import Lambda
 from tensorflow.keras.callbacks import Callback
+import tensorflow.keras.backend as K
 import tensorflow_model_optimization as tfmot
 from common import logging
 from common.solver import BaseSolver, BaseQuantSolver
@@ -35,47 +36,6 @@ class SimulationResidual(Callback):
                 weight[:, :, -3:, :] = 0
                 for j in range(27):
                     weight[kernel_size//2, kernel_size//2, channel + j % 3, j] = 1
-            else:
-                if i != 0:
-                    weight[:, :, -3:, :] = 0
-                weight[:, :, :, -3:] = 0
-                for j in [1, 2, 3]:
-                    weight[kernel_size//2, kernel_size//2, -j, -j] = 1
-                bias[-3:] = 0
-            layer.weights[0].assign(weight)
-            layer.weights[1].assign(bias)
-
-
-class SimulationResidualForClip(Callback):
-    ''' SimulationResidual '''
-    def __init__(self, goal_step):
-        super().__init__()
-        self.goal_step = goal_step
-
-    def on_batch_end(self, batch, logs=None):
-        goal_step = self.goal_step
-        for i in range(goal_step + 3):
-            name = 'conv2d' if i == 0 else f'conv2d_{i}'
-            for layer_ in self.model.layers:
-                if name in layer_.name:
-                    layer = layer_
-                    break
-            weight, bias = layer.weights[0].numpy(), layer.weights[1].numpy()
-            kernel_size, channel = weight.shape[0], weight.shape[2] - 3
-            if i == goal_step:
-                weight[:, :, -3:, :] = 0
-                for j in range(27):
-                    weight[kernel_size//2, kernel_size//2, channel + j % 3, j] = 1
-            elif i == goal_step + 1:
-                weight[:, :, :, :] = 0
-                for j in range(27):
-                    weight[kernel_size//2, kernel_size//2, j, j] = -1
-                bias[:] = 255
-            elif i == goal_step + 2:
-                weight[:, :, :, :] = 0
-                for j in range(27):
-                    weight[kernel_size//2, kernel_size//2, j, j] = -1
-                bias[:] = 255
             else:
                 if i != 0:
                     weight[:, :, -3:, :] = 0
@@ -205,11 +165,22 @@ class RemoveClipQuantSolver(BaseQuantSolver):
         self.model = remove_clip(model1, model2)
         self.model.summary(print_fn=logging.info)
 
+    def scheduler(self, epoch):
+        ''' scheduler lr '''
+        if epoch <= 20:     # for qat init (Manually modifying parameters to some extent destroys the quantization results)
+            K.set_value(self.model.optimizer.lr, 0.0)
+        elif epoch == 21:   # finetune
+            K.set_value(self.model.optimizer.lr, self.config.train['lr'])
+        else:
+            if epoch in self.config.train['lr_steps']:
+                current_lr = K.get_value(self.model.optimizer.lr)
+                K.set_value(self.model.optimizer.lr, current_lr * self.config.train['lr_gamma'])
+        return K.get_value(self.model.optimizer.lr)
+
     def build_callback(self):
         ''' build_callback '''
         self.callback = [
             LearningRateScheduler(self.scheduler),
             TrainDataShuffleCallback(self.train_data),
-            SimulationResidualForClip(config.model['blocks'] + 1),
             ValidationWithEMACallback(self.config.trial_name, self.val_data, self.state)
         ]
