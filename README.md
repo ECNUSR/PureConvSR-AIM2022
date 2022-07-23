@@ -198,3 +198,15 @@ python remove_clip_fintune.py --trial trial14 --qat_path experiments/trial14_qat
 python convert.py --name trial14 --clip
 ```
 > PSNR: 30.0483 | QAT_PSNR: 29.8979
+
+### 16. trial16
+
+> 5x24，通道小了，层数多了，可是参数多了（运行速度可能变慢，提交一下试试），可以效果没有变好
+
+```bash
+python train.py --trial trial16 --lark cjh
+python train_qat.py --trial trial16 --qat_path experiments/trial16/best_status --lark cjh
+python remove_clip_fintune.py --trial trial16 --qat_path experiments/trial16_qat/best_status --lark cjh
+python convert.py --name trial16 --clip
+```
+> PSNR: 30.1062 | QAT_PSNR: 30.0057
