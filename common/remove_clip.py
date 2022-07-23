@@ -22,11 +22,20 @@ def remove_clip(model1, model2):
     layers1 = {layer.name: layer for layer in model1.layers}
     layers2 = {layer.name: layer for layer in model2.layers}
     layers1_name = [layer.name for layer in model1.layers]
+    last_conv_name = [name for name in layers1_name if ('conv' in name or 'residual' in name)][-1]
     else_name = [layer.name for layer in model2.layers if layer.name not in layers1_name]
     for name in layers1_name:
         layer1, layer2 = layers1[name], layers2[name]
-        for j in range(len(layer1.weights)):    # pylint: disable=consider-using-enumerate
-            layer2.weights[j].assign(layer1.weights[j])
+        if name == last_conv_name:
+            layer2.weights[0].assign(-layer1.weights[0])
+            layer2.weights[1].assign(255 - layer1.weights[1])
+            layer2.weights[3].assign(-layer1.weights[4])
+            layer2.weights[4].assign(-layer1.weights[3])
+            layer2.weights[5].assign(0)
+            layer2.weights[6].assign(255 - layer1.weights[5])
+        else:
+            for j in range(len(layer1.weights)):    # pylint: disable=consider-using-enumerate
+                layer2.weights[j].assign(layer1.weights[j])
     weight = np.zeros((1, 1, 27, 27))
     for j in range(27):
         weight[0, 0, j, j] = -1
