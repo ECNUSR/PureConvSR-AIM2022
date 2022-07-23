@@ -174,3 +174,15 @@ python remove_clip_fintune.py --trial trial13 --qat_path experiments/trial13_qat
 python convert.py --name trial13 --clip
 ```
 > PSNR: 30.0941 | QAT_PSNR: 30.0091
+
+### 14. trial14
+
+> 在trial13的基础上，层数少了一层，通道数多了一点点（看来还是层数更靠谱）
+
+```bash
+python train.py --trial trial14 --lark cjh
+python train_qat.py --trial trial14 --qat_path experiments/trial14/best_status --lark cjh
+python remove_clip_fintune.py --trial trial14 --qat_path experiments/trial14_qat/best_status --lark cjh
+python convert.py --name trial14 --clip
+```
+> PSNR: 29.9880 | QAT_PSNR: 29.8974
