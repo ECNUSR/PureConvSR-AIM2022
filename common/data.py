@@ -38,7 +38,7 @@ class DIV2K(tf.keras.utils.Sequence):
         random.shuffle(self.img_list)
 
     def __len__(self):
-        if self.mode == 'train' or self.mode == 'df2k':
+        if self.mode in ['train', 'df2k']:
             return self.iters_per_batch
         return len(self.img_list)
 
