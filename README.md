@@ -186,3 +186,15 @@ python remove_clip_fintune.py --trial trial14 --qat_path experiments/trial14_qat
 python convert.py --name trial14 --clip
 ```
 > PSNR: 29.9880 | QAT_PSNR: 29.8974
+
+### 15. trial15
+
+> 3x28（其实是3x31）的对比实验，消融的是
+
+```bash
+python train.py --trial trial14 --lark cjh
+python train_qat.py --trial trial14 --qat_path experiments/trial14/best_status --lark cjh
+python remove_clip_fintune.py --trial trial14 --qat_path experiments/trial14_qat/best_status --lark cjh
+python convert.py --name trial14 --clip
+```
+> PSNR: 30.0483 | QAT_PSNR: 29.8979
