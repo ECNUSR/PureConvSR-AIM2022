@@ -189,7 +189,7 @@ python convert.py --name trial14 --clip
 
 ### 15. trial15
 
-> 3x28（其实是3x31）的对比实验，消融的是
+> 3x28（其实是3x31）的对比实验，消融的是 cat -> conv
 
 ```bash
 python train.py --trial trial14 --lark cjh
