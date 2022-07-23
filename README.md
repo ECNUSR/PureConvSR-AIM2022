@@ -210,3 +210,15 @@ python remove_clip_fintune.py --trial trial16 --qat_path experiments/trial16_qat
 python convert.py --name trial16 --clip
 ```
 > PSNR: 30.1062 | QAT_PSNR: 30.0057
+
+### 18. trial18
+
+> 6x24，可能层数多，残差的结果损失越多
+
+```bash
+python train.py --trial trial18 --lark cjh
+python train_qat.py --trial trial18 --qat_path experiments/trial18/best_status --lark cjh
+python remove_clip_fintune.py --trial trial18 --qat_path experiments/trial18_qat/best_status --lark cjh
+python convert.py --name trial18 --clip
+```
+> PSNR: 30.1369 | QAT_PSNR: 30.0109
