@@ -211,6 +211,18 @@ python convert.py --name trial16 --clip
 ```
 > PSNR: 30.1062 | QAT_PSNR: 30.0057
 
+### 17. trial17
+
+> 3x45
+
+```bash
+python train.py --trial trial17 --lark cjh
+python train_qat.py --trial trial17 --qat_path experiments/trial17/best_status --lark cjh
+python remove_clip_fintune.py --trial trial17 --qat_path experiments/trial17_qat/best_status --lark cjh
+python convert.py --name trial17 --clip
+```
+> PSNR: 30.2608 | QAT_PSNR: 30.1648
+
 ### 18. trial18
 
 > 6x24，可能层数多，残差的结果损失越多
