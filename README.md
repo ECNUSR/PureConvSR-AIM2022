@@ -210,3 +210,14 @@ python remove_clip_fintune.py --trial trial16 --qat_path experiments/trial16_qat
 python convert.py --name trial16 --clip
 ```
 > PSNR: 30.1062 | QAT_PSNR: 30.0057
+
+### 21. trial21
+
+> 4x48
+
+```bash
+python train_qat.py --trial trial21 --lark cjh --qat_path experiments/trial10/best_status
+python remove_clip_fintune.py --trial trial21 --qat_path experiments/trial21_qat/best_status --lark cjh
+python convert.py --name trial21 --clip
+```
+> PSNR: 30.3244 | QAT_PSNR: 30.1851
