@@ -46,6 +46,47 @@ class SimulationResidual(Callback):
             layer.weights[1].assign(bias)
 
 
+class SimulationResidualForClip(Callback):
+    ''' SimulationResidual '''
+    def __init__(self, goal_step):
+        super().__init__()
+        self.goal_step = goal_step
+
+    def on_batch_end(self, batch, logs=None):
+        goal_step = self.goal_step
+        for i in range(goal_step + 3):
+            name = 'conv2d' if i == 0 else f'conv2d_{i}'
+            for layer_ in self.model.layers:
+                if name in layer_.name:
+                    layer = layer_
+                    break
+            weight, bias = layer.weights[0].numpy(), layer.weights[1].numpy()
+            kernel_size, channel = weight.shape[0], weight.shape[2] - 3
+            if i == goal_step:
+                weight[:, :, -3:, :] = 0
+                for j in range(27):
+                    weight[kernel_size//2, kernel_size//2, channel + j % 3, j] = 1
+            elif i == goal_step + 1:
+                weight[:, :, :, :] = 0
+                for j in range(27):
+                    weight[kernel_size//2, kernel_size//2, j, j] = -1
+                bias[:] = 255
+            elif i == goal_step + 2:
+                weight[:, :, :, :] = 0
+                for j in range(27):
+                    weight[kernel_size//2, kernel_size//2, j, j] = -1
+                bias[:] = 255
+            else:
+                if i != 0:
+                    weight[:, :, -3:, :] = 0
+                weight[:, :, :, -3:] = 0
+                for j in [1, 2, 3]:
+                    weight[kernel_size//2, kernel_size//2, -j, -j] = 1
+                bias[-3:] = 0
+            layer.weights[0].assign(weight)
+            layer.weights[1].assign(bias)
+
+
 class Solver(BaseSolver):
     ''' Solver '''
     def __init__(self, train_data, val_data, resume_path=None):
@@ -169,5 +210,6 @@ class RemoveClipQuantSolver(BaseQuantSolver):
         self.callback = [
             LearningRateScheduler(self.scheduler),
             TrainDataShuffleCallback(self.train_data),
+            SimulationResidualForClip(config.model['blocks'] + 1),
             ValidationWithEMACallback(self.config.trial_name, self.val_data, self.state)
         ]

@@ -185,7 +185,7 @@ python train_qat.py --trial trial14 --qat_path experiments/trial14/best_status -
 python remove_clip_fintune.py --trial trial14 --qat_path experiments/trial14_qat/best_status --lark cjh
 python convert.py --name trial14 --clip
 ```
-> PSNR: 29.9880 | QAT_PSNR: 29.8974
+> PSNR: 29.9880 | QAT_PSNR: 29.9001
 
 ### 15. trial15
 
