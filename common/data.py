@@ -9,7 +9,7 @@ import tensorflow as tf
 class DIV2K(tf.keras.utils.Sequence):
     ''' DIV2K datasets '''
     def __init__(self, mode, scale, patch_size=None, batch_size=None, iters_per_batch=1000, flip=True, rot=True):
-        assert mode in ['train', 'valid']
+        assert mode in ['train', 'valid', 'df2k']
         self.mode = mode
         self.scale = scale
         self.patch_size = patch_size
@@ -38,7 +38,7 @@ class DIV2K(tf.keras.utils.Sequence):
         random.shuffle(self.img_list)
 
     def __len__(self):
-        if self.mode == 'train':
+        if self.mode in ['train', 'df2k']:
             return self.iters_per_batch
         return len(self.img_list)
 
