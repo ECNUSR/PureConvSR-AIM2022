@@ -1,0 +1,52 @@
+2022-07-25 08:04:10,759 INFO: Create train dataset successfully!
+2022-07-25 08:04:10,759 INFO: Training: [1000] iterations for each epoch
+2022-07-25 08:04:10,760 INFO: Create val dataset successfully!
+2022-07-25 08:04:10,760 INFO: Validating: [100] iterations for each epoch
+2022-07-25 08:04:10,760 INFO: Preparing for experiment: [trial20_clip]
+2022-07-25 08:04:20,674 INFO: Model: "model"
+2022-07-25 08:04:20,674 INFO: _________________________________________________________________
+2022-07-25 08:04:20,674 INFO: Layer (type)                 Output Shape              Param #   
+2022-07-25 08:04:20,674 INFO: =================================================================
+2022-07-25 08:04:20,675 INFO: input_1 (InputLayer)         [(None, None, None, 3)]   0         
+2022-07-25 08:04:20,675 INFO: _________________________________________________________________
+2022-07-25 08:04:20,675 INFO: quantize_layer (QuantizeLaye (None, None, None, 3)     3         
+2022-07-25 08:04:20,675 INFO: _________________________________________________________________
+2022-07-25 08:04:20,676 INFO: quant_conv2d (QuantizeWrappe (None, None, None, 40)    1203      
+2022-07-25 08:04:20,676 INFO: _________________________________________________________________
+2022-07-25 08:04:20,677 INFO: quant_conv2d_1 (QuantizeWrap (None, None, None, 40)    14523     
+2022-07-25 08:04:20,677 INFO: _________________________________________________________________
+2022-07-25 08:04:20,677 INFO: quant_conv2d_2 (QuantizeWrap (None, None, None, 40)    14523     
+2022-07-25 08:04:20,677 INFO: _________________________________________________________________
+2022-07-25 08:04:20,677 INFO: quant_conv2d_3 (QuantizeWrap (None, None, None, 40)    14523     
+2022-07-25 08:04:20,677 INFO: _________________________________________________________________
+2022-07-25 08:04:20,677 INFO: quant_conv2d_4 (QuantizeWrap (None, None, None, 27)    9804      
+2022-07-25 08:04:20,677 INFO: _________________________________________________________________
+2022-07-25 08:04:20,677 INFO: quant_conv2d_5 (QuantizeWrap (None, None, None, 27)    813       
+2022-07-25 08:04:20,677 INFO: _________________________________________________________________
+2022-07-25 08:04:20,678 INFO: quant_lambda (QuantizeWrappe (None, None, None, 3)     1         
+2022-07-25 08:04:20,678 INFO: =================================================================
+2022-07-25 08:04:20,678 INFO: Total params: 55,393
+2022-07-25 08:04:20,678 INFO: Trainable params: 54,943
+2022-07-25 08:04:20,678 INFO: Non-trainable params: 450
+2022-07-25 08:04:20,678 INFO: _________________________________________________________________
+2022-07-25 08:04:20,680 INFO: Start training...
+2022-07-25 08:05:47,737 INFO: Epoch: 1 | PSNR: 30.1008 | Loss: 5.5379 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 255.0 in Epoch [1]
+2022-07-25 08:06:49,173 INFO: Epoch: 2 | PSNR: 30.0798 | Loss: 5.5718 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.9956512451172 in Epoch [1]
+2022-07-25 08:09:05,426 INFO: Epoch: 3 | PSNR: 30.0815 | Loss: 5.5475 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.9956512451172 in Epoch [1]
+2022-07-25 08:10:00,511 INFO: Epoch: 4 | PSNR: 30.0864 | Loss: 5.5398 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99453735351562 in Epoch [1]
+2022-07-25 08:11:05,500 INFO: Epoch: 5 | PSNR: 30.0946 | Loss: 5.5395 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99453735351562 in Epoch [1]
+2022-07-25 08:12:08,743 INFO: Epoch: 6 | PSNR: 30.0856 | Loss: 5.5723 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:13:06,212 INFO: Epoch: 7 | PSNR: 30.0820 | Loss: 5.5381 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:14:00,863 INFO: Epoch: 8 | PSNR: 30.0866 | Loss: 5.5723 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:14:58,994 INFO: Epoch: 9 | PSNR: 30.0885 | Loss: 5.5596 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:16:26,511 INFO: Epoch: 10 | PSNR: 30.0873 | Loss: 5.6015 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99151611328125 in Epoch [1]
+2022-07-25 08:17:22,682 INFO: Epoch: 11 | PSNR: 30.0812 | Loss: 5.5696 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:18:43,473 INFO: Epoch: 12 | PSNR: 30.0736 | Loss: 5.5641 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:20:30,210 INFO: Epoch: 13 | PSNR: 30.0728 | Loss: 5.5806 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:21:24,986 INFO: Epoch: 14 | PSNR: 30.0837 | Loss: 5.5604 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:22:31,732 INFO: Epoch: 15 | PSNR: 30.0849 | Loss: 5.5785 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:23:48,685 INFO: Epoch: 16 | PSNR: 30.0845 | Loss: 5.6098 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:24:45,158 INFO: Epoch: 17 | PSNR: 30.0888 | Loss: 5.5767 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99081420898438 in Epoch [1]
+2022-07-25 08:25:54,515 INFO: Epoch: 18 | PSNR: 30.0804 | Loss: 5.6292 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:27:01,881 INFO: Epoch: 19 | PSNR: 30.0857 | Loss: 5.6034 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]
+2022-07-25 08:28:32,905 INFO: Epoch: 20 | PSNR: 30.0719 | Loss: 5.5802 | lr: 0.00e+00 | Best_PSNR: 30.1008 | max_value: 254.99237060546875 in Epoch [1]

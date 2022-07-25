@@ -247,6 +247,18 @@ python convert.py --name trial19 --clip
 ```
 > PSNR: 30.3237 | QAT_PSNR: 30.2237
 
+### 19. trial20
+
+> 3x37
+
+```bash
+python train.py --trial trial20 --lark cjh
+python train_qat.py --trial trial20 --qat_path experiments/trial20/best_status --lark cjh
+python remove_clip_fintune.py --trial trial20 --qat_path experiments/trial20_qat/best_status --lark cjh
+python convert.py --name trial20 --clip
+```
+> PSNR: 30.1832 | QAT_PSNR: 30.1008
+
 ### 21. trial21
 
 > 4x48
