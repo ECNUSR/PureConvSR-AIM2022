@@ -64,7 +64,7 @@ def tb_log(global_step, logger_name='ccjiahao', **kwargs):
         keys = key.split('//')
         key, path = keys[-1], os.path.join(tb_logger['root'], *keys[:-1])
         if path not in tb_logger:
-            from torch.utils.tensorboard import SummaryWriter   # pylint: disable=import-outside-toplevel
+            from tensorboardX import SummaryWriter
             tb_logger[path] = SummaryWriter(log_dir=path)
         logger = tb_logger[path]
         try:
