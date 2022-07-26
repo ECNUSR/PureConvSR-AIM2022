@@ -169,7 +169,7 @@ python convert.py --name trial12
 > 在trial9的基础上，优化掉cat算子
 
 ```bash
-python train_qat.py --trial trial14 --lark cjh --qat_path experiments/trial9/best_status
+python train_qat.py --trial trial13 --lark cjh --qat_path experiments/trial9/best_status
 python remove_clip_fintune.py --trial trial13 --qat_path experiments/trial13_qat/best_status --lark cjh
 python convert.py --name trial13 --clip
 ```
@@ -247,7 +247,7 @@ python convert.py --name trial19 --clip
 ```
 > PSNR: 30.3237 | QAT_PSNR: 30.2237
 
-### 19. trial20
+### 20. trial20
 
 > 3x37
 
@@ -269,3 +269,15 @@ python remove_clip_fintune.py --trial trial21 --qat_path experiments/trial21_qat
 python convert.py --name trial21 --clip
 ```
 > PSNR: 30.3244 | QAT_PSNR: 30.1851
+
+### 23. trial23
+
+> 3x28，31 rep
+
+```bash
+python train.py --trial trial23 --lark cjh
+python train_qat.py --trial trial23 --lark cjh --qat_path experiments/trial23/best_status
+python remove_clip_fintune.py --trial trial23 --qat_path experiments/trial23_qat/best_status --lark cjh
+python convert.py --name trial23 --clip
+```
+> PSNR: 30.1070 | QAT_PSNR: 30.0150
