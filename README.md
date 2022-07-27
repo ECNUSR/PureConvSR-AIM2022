@@ -280,4 +280,16 @@ python train_qat.py --trial trial23 --lark cjh --qat_path experiments/trial23/be
 python remove_clip_fintune.py --trial trial23 --qat_path experiments/trial23_qat/best_status --lark cjh
 python convert.py --name trial23 --clip
 ```
-> PSNR: 30.1070 | QAT_PSNR: 30.0150
+> PSNR: 30.1070 | QAT_PSNR: 30.0150### 23. trial23
+
+### 24. trial24
+
+> 3x29，32 rep
+
+```bash
+python train.py --trial trial24 --lark cjh
+python train_qat.py --trial trial24 --lark cjh --qat_path experiments/trial24/best_status
+python remove_clip_fintune.py --trial trial24 --qat_path experiments/trial24_qat/best_status --lark cjh
+python convert.py --name trial24 --clip
+```
+> PSNR: 30.1395 | QAT_PSNR: 30.0487
