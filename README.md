@@ -1,3 +1,5 @@
+[README for submit(English)](./README_for_submit.md)
+
 # 介绍
 
 主要代码改自[SR_Mobile_Quantization](https://github.com/NJU-Jet/SR_Mobile_Quantization)，针对比赛高频率修改模型的特点，做出一些修改。
