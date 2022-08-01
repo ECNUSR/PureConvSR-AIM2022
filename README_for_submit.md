@@ -42,9 +42,9 @@ conda env create -f tf250.yaml
 # Training
 Execute the following scripts in turn to run the code, and the final exported tflite file is in the tflite/trial24/ directory.
 ```
-python train.py --trial trial24 --lark cjh
-python train_qat.py --trial trial24 --lark cjh --qat_path experiments/trial24/best_status
-python remove_clip_fintune.py --trial trial24 --qat_path experiments/trial24_qat/best_status --lark cjh
+python train.py --trial trial24
+python train_qat.py --trial trial24 --qat_path experiments/trial24/best_status
+python remove_clip_fintune.py --trial trial24 --qat_path experiments/trial24_qat/best_status
 python convert.py --name trial24 --clip
 ```
 
