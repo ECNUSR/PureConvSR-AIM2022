@@ -1,5 +1,9 @@
 [README for submit(English)](./README_for_submit.md)
 
+PureConvSR won the third place in the Mobile AI & AIM: Real-Time Image Super-Resolution Challenge ([website](https://data.vision.ee.ethz.ch/cvl/aim22/) / [report](https://arxiv.org/abs/2211.05910)).
+
+This is the code written during the competition. We deliberately open-sourced all the records of our attempts to the readers to show the birth process of PureConvSR. The latest and more standardized code can be found in [ETDS](https://github.com/ECNUSR/ETDS), which is an optimized version of PureConvSR.
+
 # 介绍
 
 主要代码改自[SR_Mobile_Quantization](https://github.com/NJU-Jet/SR_Mobile_Quantization)，针对比赛高频率修改模型的特点，做出一些修改。
